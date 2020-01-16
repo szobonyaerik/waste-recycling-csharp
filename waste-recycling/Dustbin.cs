@@ -6,11 +6,11 @@ namespace WasteRecycling
 {
     public class Dustbin
     {
-        public string _Color;
+        
         public PaperGarbage[] PaperContent = new PaperGarbage[1000];
         public int paperindex = 0;
 
-        public PlasticGarbage[] PlassticContent = new PlasticGarbage[1000];
+        public PlasticGarbage[] PlasticContent = new PlasticGarbage[1000];
         public int plasticindex = 0;
 
         public Garbage[] HouseWasteContent = new Garbage[1000];
@@ -21,12 +21,12 @@ namespace WasteRecycling
 
         public Dustbin(string Color)
         {
-            this._Color = Color;
+            this.Color = Color;
         }
 
         public void DisplayContents()
         {
-            Console.WriteLine("{0} Dustbin!",this._Color);
+            Console.WriteLine("{0} Dustbin!",this.Color);
             Console.WriteLine("House waste content: {0} item(s)",housewasteindex);
             if (housewasteindex > 0)
             {
@@ -48,7 +48,7 @@ namespace WasteRecycling
             Console.WriteLine("Plastic content: {0} item(s)",plasticindex);
             if (plasticindex > 0)
             {
-                foreach(PlasticGarbage plastic in PlassticContent )
+                foreach(PlasticGarbage plastic in PlasticContent )
                 {
                     Console.WriteLine(plastic.Name);
                 }
@@ -63,12 +63,12 @@ namespace WasteRecycling
 
             if (garbage is PlasticGarbage && ((PlasticGarbage)garbage).Cleaned)
             {
-                PlassticContent[plasticindex] = (PlasticGarbage)garbage;
+                PlasticContent[plasticindex] = (PlasticGarbage)garbage;
                 plasticindex++;
             }
             else if (garbage is PlasticGarbage && !((PlasticGarbage)garbage).Cleaned)
             {
-                throw exeption;
+                throw new DustbinContentException();
             }
             else if (garbage is PaperGarbage && ((PaperGarbage)garbage).Squeezed)
             {
@@ -77,7 +77,7 @@ namespace WasteRecycling
             }
             else if (garbage is PaperGarbage && !((PaperGarbage)garbage).Squeezed)
             {
-                throw exeption;
+                throw new DustbinContentException();
             }
             else if(!(garbage is PaperGarbage) && !(garbage is PlasticGarbage))
             {
@@ -86,13 +86,13 @@ namespace WasteRecycling
             }
             else
             {
-                throw exeption;
+                throw new DustbinContentException();
             }
         }
 
         public void EmptyContents()
         {
-            Array.Clear(PlassticContent, 0, 1000 );
+            Array.Clear(PlasticContent, 0, 1000 );
             Array.Clear(PaperContent, 0, 1000);
             Array.Clear(HouseWasteContent, 0, 1000);
         }
